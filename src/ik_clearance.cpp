@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
            * Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitY()));
   ik->setMaxIKSolutions(100);
 
-  cost::ClearanceCost cl_cost;
+  cost::Clearance cl_cost;
   cl_cost.cumulative = true;
   ik->setCostTerm(cl_cost);
 
