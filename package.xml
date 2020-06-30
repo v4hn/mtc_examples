@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mtc_examples</name>
+  <version>0.0.0</version>
+  <description>The mtc_examples package</description>
+  <maintainer email="me@v4hn.de">v4hn</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>moveit_core</depend>
+  <depend>moveit_task_constructor_core</depend>
+  <depend>roscpp</depend>
+</package>
