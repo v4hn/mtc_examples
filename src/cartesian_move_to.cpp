@@ -7,6 +7,8 @@
 #include <moveit/task_constructor/stages/current_state.h>
 #include <moveit/task_constructor/stages/move_to.h>
 
+#include <moveit/robot_model/robot_model.h>
+
 using namespace moveit::task_constructor;
 
 /** CurrentState -> MoveTo(CartesianPath) */
