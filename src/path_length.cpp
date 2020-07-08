@@ -52,8 +52,8 @@ int main(int argc, char **argv) {
   }
   {
 	  auto connect { std::make_unique<stages::Connect>("elbow motion", stages::Connect::GroupPlannerVector {{ "panda_arm", pipeline }}) };
-	  alternatives->add(std::move(connect));
 	  connect->setCostTerm(cost::LinkMotion("panda_link4"));
+	  alternatives->add(std::move(connect));
   }
 
 
