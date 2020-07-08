@@ -16,6 +16,8 @@ int main(int argc, char **argv) {
   Task t("merge arms");
   t.loadRobotModel();
 
+  assert(t.getRobotModel()->getName() == "panda");
+
   Stage *current_state = nullptr;
   auto initial = std::make_unique<stages::CurrentState>("current state");
   current_state = initial.get();

@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
   Task t("clearance IK");
   t.loadRobotModel();
 
+  assert(t.getRobotModel()->getName() == "panda");
+
   auto scene = std::make_shared<planning_scene::PlanningScene>(t.getRobotModel());
   auto& robot_state = scene->getCurrentStateNonConst();
   robot_state.setToDefaultValues();
