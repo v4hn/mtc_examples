@@ -14,16 +14,35 @@ using namespace moveit::task_constructor;
 /* ComputeIK(FixedState) */
 int main(int argc, char **argv) {
   ros::init(argc, argv, "mtc_test");
+  ros::NodeHandle nh{"~"};
 
-  Task t("clearance IK");
+  ros::AsyncSpinner spinner{1};
+  spinner.start();
+
+  Task t{"clearance IK"};
+
+  // announce new task (in case previous run was restarted)
+  ros::Duration(0.5).sleep();
+
   t.loadRobotModel();
-
   assert(t.getRobotModel()->getName() == "panda");
 
   auto scene = std::make_shared<planning_scene::PlanningScene>(t.getRobotModel());
   auto& robot_state = scene->getCurrentStateNonConst();
   robot_state.setToDefaultValues();
   robot_state.setToDefaultValues(robot_state.getJointModelGroup("panda_arm"),"extended");
+
+  moveit_msgs::CollisionObject co;
+  co.id = "obstacle";
+  co.primitives.emplace_back();
+  co.primitives[0].type = shape_msgs::SolidPrimitive::SPHERE;
+  co.primitives[0].dimensions.resize(1);
+  co.primitives[0].dimensions[0] = 0.1;
+  co.header.frame_id = "world";
+  co.primitive_poses.emplace_back();
+  co.primitive_poses[0].orientation.w = 1.0;
+  co.primitive_poses[0].position.z = 0.85;
+  scene->processCollisionObjectMsg(co);
 
   auto initial = std::make_unique<stages::FixedState>();
   initial->setState(scene);
@@ -37,7 +56,8 @@ int main(int argc, char **argv) {
   ik->setMaxIKSolutions(100);
 
   cost::Clearance cl_cost;
-  cl_cost.cumulative = true;
+  cl_cost.cumulative = nh.param("cumulative", false);
+  cl_cost.with_world = nh.param("with_world", false);
   ik->setCostTerm(cl_cost);
 
   t.add(std::move(ik));
@@ -48,7 +68,7 @@ int main(int argc, char **argv) {
     std::cout << e << std::endl;
   }
 
-  ros::spin();
+  ros::waitForShutdown();
 
   return 0;
 }
