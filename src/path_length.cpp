@@ -37,12 +37,12 @@ int main(int argc, char **argv) {
   auto alternatives { std::make_unique<Alternatives>("connect") };
   {
 	  auto connect { std::make_unique<stages::Connect>("path length", stages::Connect::GroupPlannerVector {{ "panda_arm", pipeline }}) };
-	  connect->setCostTerm(cost::PathLength); // This is the default for Connect anyway, but just for highlighting
+	  connect->setCostTerm(cost::PathLength{}); // This is the default for Connect anyway, but just for highlighting
 	  alternatives->add(std::move(connect));
   }
   {
 	  auto connect { std::make_unique<stages::Connect>("trajectory duration", stages::Connect::GroupPlannerVector {{ "panda_arm", pipeline }}) };
-	  connect->setCostTerm(cost::TrajectoryDuration);
+	  connect->setCostTerm(cost::TrajectoryDuration{});
 	  alternatives->add(std::move(connect));
   }
   {
