@@ -55,10 +55,10 @@ int main(int argc, char **argv) {
            * Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitY()));
   ik->setMaxIKSolutions(100);
 
-  cost::Clearance cl_cost;
-  cl_cost.cumulative = nh.param("cumulative", false);
-  cl_cost.with_world = nh.param("with_world", false);
-  ik->setCostTerm(cl_cost);
+  auto cl_cost { std::make_unique<cost::Clearance>() };
+  cl_cost->cumulative = nh.param("cumulative", false);
+  cl_cost->with_world = nh.param("with_world", false);
+  ik->setCostTerm(std::move(cl_cost));
 
   t.add(std::move(ik));
 
