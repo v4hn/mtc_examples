@@ -22,6 +22,4 @@ endfunction()
 
 example(merger)
 example(cartesian_move_to)
-example(ik_clearance)
-example(path_length)
 example(modifying_wrapper)
