@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(mtc_examples)
 
+set(CMAKE_CXX_STANDARD 14)
+
 find_package(catkin REQUIRED COMPONENTS
   moveit_core
   moveit_task_constructor_core
