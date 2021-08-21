@@ -69,6 +69,7 @@ int main(int argc, char** argv){
 	auto cik { std::make_unique<ComputeIK>("IK", std::move(seed)) };
 	cik->setGroup("panda_arm");
 	cik->setIKFrame("panda_hand");
+	cik->setMaxIKSolutions(32);
 	cik->properties().configureInitFrom(Stage::INTERFACE, {"target_pose"}); // TODO(v4hn): all alternatives to this line are much more complex
 	t.add(std::move(cik));
 
